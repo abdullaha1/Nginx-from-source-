@@ -1,0 +1,22 @@
+
+	location ~ /api/images/(\d+)/(\d+)(/.*)$ {
+		#access_log off;
+                #log_not_found off;
+		access_log  logs/images_access.log;
+		add_header Content-Disposition 'attachment';
+		proxy_set_header Accept-Encoding "deflate, gzip";
+		proxy_set_header Accept "*/*";
+		proxy_http_version 1.1;
+		proxy_method GET;
+		proxy_pass_request_body off;
+		proxy_set_header Content-Length "";
+		proxy_pass s3 url
+		image_filter off;
+    image_filter test;
+    image_filter size;
+		image_filter_buffer 3M;
+    image_filter rotate 90;
+    image_filter resize $1 $2;
+    add_header Content-Disposition 'attachment';
+    error_page   415 = /empty;
+   }
