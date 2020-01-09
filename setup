@@ -1,0 +1,18 @@
+sudo apt install libgd-dev
+sudo apt install libpcre3-dev
+sudo apt install ffmpeg
+sudo apt install libssl-dev
+sudo apt-get install libavformat-dev
+sudo apt-get install libswscale-dev
+sudo apt-get install libavfilter-dev
+
+wget https://nginx.org/download/nginx-1.15.0.tar.gz && tar zxvf nginx-1.15.0.tar.gz
+
+cd /nginx-1.15.0
+
+./configure --prefix=/usr/local/nginx \
+            --with-http_image_filter_module \
+            --with-http_ssl_module --add-module=$NGINX_VIDEO_THUMBEXTRACTOR_MODULE_PATH
+make
+
+sudo make install
